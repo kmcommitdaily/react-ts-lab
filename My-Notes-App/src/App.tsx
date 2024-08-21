@@ -6,6 +6,7 @@ function App() {
   const [header, setHeader] = useState('');
   const [note, setNote] = useState('');
   const [noteList, setNoteList] = useState([]);
+  const [isExtended, setIsExtended] = useState(false);
 
   useEffect(() => {
     const savedNotes = localStorage.getItem('noteList');
@@ -18,7 +19,7 @@ function App() {
         console.log('error', error);
       }
     }
-  });
+  }, []);
 
   function handleAdd() {
     const newNote = { header, note }; // I put the  updated header and note state value here
@@ -40,6 +41,40 @@ function App() {
         ))}
       </>
     );
+  }
+
+  function handleExtend() {
+    const aside = document.querySelector('.aside') as HTMLElement;
+    if (aside) {
+      aside.style.display = 'none';
+    }
+
+    const noteDocument = document.querySelector(
+      '.note-document'
+    ) as HTMLElement;
+
+    if (noteDocument) {
+      noteDocument.style.width = '100vw';
+    }
+
+    setIsExtended((prev) => !prev);
+  }
+
+  function handleMinimize() {
+    const aside = document.querySelector('.aside') as HTMLElement;
+    if (aside) {
+      aside.style.display = 'block';
+    }
+
+    const noteDocument = document.querySelector(
+      '.note-document'
+    ) as HTMLElement;
+
+    if (noteDocument) {
+      noteDocument.style.width = '80vw';
+    }
+
+    setIsExtended((prev) => !prev);
   }
 
   // when i click the add
@@ -65,7 +100,11 @@ function App() {
         </aside>
         <div className="notepad">
           <div className="note-doc-header">
-            <button className="extend-btn">extend</button>
+            <button
+              className="extend-btn"
+              onClick={!isExtended ? handleExtend : handleMinimize}>
+              {isExtended ? 'minimize' : 'extend'}
+            </button>
             <button className="add-btn" onClick={handleAdd}>
               add
             </button>
