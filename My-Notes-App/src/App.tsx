@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import {
+  handleAdd,
+  handleExtend,
+  handleMinimize,
+  renderNoteList,
+} from './lib/utils';
+
+import { Note } from '../src/lib/types';
 
 function App() {
   // localStorage.removeItem('noteList');
-  const [header, setHeader] = useState('');
-  const [note, setNote] = useState('');
-  const [noteList, setNoteList] = useState([]);
+  const [header, setHeader] = useState<string>('');
+  const [note, setNote] = useState<string>('');
+  const [noteList, setNoteList] = useState<Note[]>([]);
   const [isExtended, setIsExtended] = useState(false);
 
   useEffect(() => {
@@ -21,69 +29,6 @@ function App() {
     }
   }, []);
 
-  function handleAdd() {
-    const newNote = { header, note }; // I put the  updated header and note state value here
-    const updatedNoteList = [...noteList, newNote]; // and append it to my noteList array
-    localStorage.setItem('noteList', JSON.stringify(updatedNoteList)); // all the array list will be save in my local storage
-    setNoteList(updatedNoteList); // my notelist will be updated whenever new note was added
-    setHeader('');
-    setNote('');
-  }
-
-  function renderNoteList() {
-    return (
-      <>
-        {noteList.map((noteItem, index) => (
-          <div className="list-container" key={index}>
-            <h3>{noteItem.header}</h3>
-            <p>{noteItem.note.split(' ').slice(0, 7).join(' ')}</p>
-          </div>
-        ))}
-      </>
-    );
-  }
-
-  function handleExtend() {
-    const aside = document.querySelector('.aside') as HTMLElement;
-    if (aside) {
-      aside.style.display = 'none';
-    }
-
-    const noteDocument = document.querySelector(
-      '.note-document'
-    ) as HTMLElement;
-
-    if (noteDocument) {
-      noteDocument.style.width = '100vw';
-    }
-
-    setIsExtended((prev) => !prev);
-  }
-
-  function handleMinimize() {
-    const aside = document.querySelector('.aside') as HTMLElement;
-    if (aside) {
-      aside.style.display = 'block';
-    }
-
-    const noteDocument = document.querySelector(
-      '.note-document'
-    ) as HTMLElement;
-
-    if (noteDocument) {
-      noteDocument.style.width = '80vw';
-    }
-
-    setIsExtended((prev) => !prev);
-  }
-
-  // when i click the add
-  // it should save the header and body to localstorage as notes
-  //push the savaed header and body to previewlist array
-
-  // render the previewlist array
-  // clear the notepad
-
   return (
     <>
       <h1>Notes</h1>
@@ -95,17 +40,34 @@ function App() {
           </div>
           <h3>Preview</h3>
           <div className="prev-container">
-            <div className="prev-list-container">{renderNoteList()}</div>
+            <div className="prev-list-container">
+              {renderNoteList({ noteList })}
+            </div>
           </div>
         </aside>
         <div className="notepad">
           <div className="note-doc-header">
             <button
               className="extend-btn"
-              onClick={!isExtended ? handleExtend : handleMinimize}>
+              onClick={() => {
+                !isExtended
+                  ? handleExtend(setIsExtended)
+                  : handleMinimize(setIsExtended);
+              }}>
               {isExtended ? 'minimize' : 'extend'}
             </button>
-            <button className="add-btn" onClick={handleAdd}>
+            <button
+              className="add-btn"
+              onClick={() => {
+                handleAdd({
+                  noteList,
+                  setNoteList,
+                  setHeader,
+                  setNote,
+                  header,
+                  note,
+                });
+              }}>
               add
             </button>
           </div>
