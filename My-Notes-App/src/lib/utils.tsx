@@ -4,6 +4,7 @@ import {
   handleAddProps,
   renderNoteListProps,
   handleDeleteProps,
+  Note,
 } from '../lib/types';
 import DeleteButton from '../components/DeleteButton';
 
@@ -60,12 +61,10 @@ export function handleMinimize(
 
 function handleDelete({ setNoteList, index }: handleDeleteProps) {
   const noteList = localStorage.getItem('noteList');
-  const savedNotes = noteList ? JSON.parse(noteList) : [];
+  const savedNotes = (noteList ? JSON.parse(noteList) : []) as Note[];
 
   const updatedList = savedNotes.filter((_, i) => i !== index);
-  {
-    /** clean this or add types */
-  }
+
   setNoteList(updatedList);
   localStorage.setItem('noteList', JSON.stringify(updatedList));
 }
