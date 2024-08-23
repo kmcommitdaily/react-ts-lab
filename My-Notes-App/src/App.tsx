@@ -16,7 +16,6 @@ import NotePadHeader from './components/NotePadHeader';
 import NotePadBody from './components/NotePadBody';
 
 function App() {
-  // localStorage.removeItem('noteList');
   const [header, setHeader] = useState<string>('');
   const [note, setNote] = useState<string>('');
   const [noteList, setNoteList] = useState<Note[]>([]);
@@ -39,16 +38,15 @@ function App() {
     <>
       <h1>Notes</h1>
       <div className="main-container">
+        {' '}
+        {/** clean the divs or make it more semantic */}
         <aside className="aside">
           <div className="search-container">
-            <SearchBox />
+            <SearchBox /> {/** work on this */}
           </div>
           <h3>{noteList.length > 0 ? 'Saved Notes' : 'Start Adding Notes'}</h3>
 
-          <NoteArchive>
-            {' '}
-            {renderNoteList({ noteList, setNoteList })}
-          </NoteArchive>
+          <NoteArchive>{renderNoteList({ noteList, setNoteList })}</NoteArchive>
         </aside>
         <div className="notepad">
           <div className="note-doc-header">

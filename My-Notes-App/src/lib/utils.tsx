@@ -15,11 +15,11 @@ export function handleAdd({
   setNote,
   header,
   note,
-}: handleAddProps): void {
-  const newNote = { header, note }; // I put the  updated header and note state value here
-  const updatedNoteList = [...noteList, newNote]; // and append it to my noteList array
-  localStorage.setItem('noteList', JSON.stringify(updatedNoteList)); // all the array list will be save in my local storage
-  setNoteList(updatedNoteList); // my notelist will be updated whenever new note was added
+}: handleAddProps) {
+  const newNote = { header, note }; // store them to one variable
+  const updatedNoteList = [...noteList, newNote]; // append to old list
+  localStorage.setItem('noteList', JSON.stringify(updatedNoteList)); // save to local storage
+  setNoteList(updatedNoteList); // update the existing list
   setHeader('');
   setNote('');
 }
@@ -63,6 +63,9 @@ function handleDelete({ setNoteList, index }: handleDeleteProps) {
   const savedNotes = noteList ? JSON.parse(noteList) : [];
 
   const updatedList = savedNotes.filter((_, i) => i !== index);
+  {
+    /** clean this or add types */
+  }
   setNoteList(updatedList);
   localStorage.setItem('noteList', JSON.stringify(updatedList));
 }
@@ -86,9 +89,4 @@ export function renderNoteList({ noteList, setNoteList }: renderNoteListProps) {
   );
 }
 
-// export function expandHeader() {
-//   const textArea = document.querySelector('header');
-//   const scrollHeight = textArea.scrollHeight;
-
-//   textArea.style.height = `${scrollHeight}px`;
-// }
+// try to make it more cleaner
