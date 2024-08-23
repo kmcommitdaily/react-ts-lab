@@ -8,6 +8,8 @@ import {
 } from './lib/utils';
 
 import { Note } from '../src/lib/types';
+import SearchBox from './components/SearchBox';
+import ExtendButton from './components/ExtendButton';
 
 function App() {
   // localStorage.removeItem('noteList');
@@ -35,8 +37,7 @@ function App() {
       <div className="main-container">
         <aside className="aside">
           <div className="search-container">
-            <input id="search-input" type="text" />
-            <button>search</button>
+            <SearchBox />
           </div>
           <h3>Preview</h3>
           <div className="prev-container">
@@ -47,7 +48,7 @@ function App() {
         </aside>
         <div className="notepad">
           <div className="note-doc-header">
-            <button
+            {/* <button
               className="extend-btn"
               onClick={() => {
                 !isExtended
@@ -55,7 +56,17 @@ function App() {
                   : handleMinimize(setIsExtended);
               }}>
               {isExtended ? 'minimize' : 'extend'}
-            </button>
+            </button> */}
+            <ExtendButton
+              isExtended={isExtended}
+              onExtend={() => {
+                handleExtend(setIsExtended);
+              }}
+              onMinimize={() => {
+                handleMinimize(setIsExtended);
+              }}
+            />
+
             <button
               className="add-btn"
               onClick={() => {
