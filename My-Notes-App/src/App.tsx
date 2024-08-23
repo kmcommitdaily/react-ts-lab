@@ -40,7 +40,7 @@ function App() {
           <div className="search-container">
             <SearchBox />
           </div>
-          <h3>Preview</h3>
+          <h3>{noteList.length > 0 ? 'Saved Notes' : 'Start Adding Notes'}</h3>
           <div className="prev-container">
             <div className="prev-list-container">
               {renderNoteList({ noteList })}
