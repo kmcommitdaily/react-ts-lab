@@ -11,6 +11,9 @@ import { Note } from '../src/lib/types';
 import SearchBox from './components/SearchBox';
 import ExtendButton from './components/ExtendButton';
 import AddButton from './components/AddButton';
+import NoteArchive from './components/NoteArchive';
+import NotePadHeader from './components/NotePadHeader';
+import NotePadBody from './components/NotePadBody';
 
 function App() {
   // localStorage.removeItem('noteList');
@@ -41,11 +44,8 @@ function App() {
             <SearchBox />
           </div>
           <h3>{noteList.length > 0 ? 'Saved Notes' : 'Start Adding Notes'}</h3>
-          <div className="prev-container">
-            <div className="prev-list-container">
-              {renderNoteList({ noteList })}
-            </div>
-          </div>
+
+          <NoteArchive> {renderNoteList({ noteList })}</NoteArchive>
         </aside>
         <div className="notepad">
           <div className="note-doc-header">
@@ -73,7 +73,7 @@ function App() {
             />
           </div>
           <div className="note-document">
-            <textarea
+            <NotePadHeader
               value={header}
               onChange={(e) => {
                 setHeader(e.target.value);
@@ -81,8 +81,9 @@ function App() {
               name="header"
               id="header"
               cols={2}
-              rows={2}></textarea>
-            <textarea
+              rows={1}
+            />
+            <NotePadBody
               value={note}
               onChange={(e) => {
                 setNote(e.target.value);
@@ -90,7 +91,8 @@ function App() {
               name="body"
               id="body"
               cols={30}
-              rows={50}></textarea>
+              rows={50}
+            />
           </div>
         </div>
       </div>

@@ -65,3 +65,10 @@ export function renderNoteList({ noteList }: renderNoteListProps) {
     </>
   );
 }
+
+// export function expandHeader() {
+//   const textArea = document.querySelector('header');
+//   const scrollHeight = textArea.scrollHeight;
+
+//   textArea.style.height = `${scrollHeight}px`;
+// }
