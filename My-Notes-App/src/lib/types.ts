@@ -16,4 +16,14 @@ export interface Note {
 
 export interface renderNoteListProps {
   noteList: Note[];
+  setNoteList: React.Dispatch<
+    React.SetStateAction<{ header: string; note: string }[]>
+  >;
+}
+
+export interface handleDeleteProps {
+  setNoteList: React.Dispatch<
+    React.SetStateAction<{ header: string; note: string }[]>
+  >;
+  index: string | number;
 }

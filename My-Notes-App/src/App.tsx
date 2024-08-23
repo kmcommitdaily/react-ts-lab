@@ -45,7 +45,10 @@ function App() {
           </div>
           <h3>{noteList.length > 0 ? 'Saved Notes' : 'Start Adding Notes'}</h3>
 
-          <NoteArchive> {renderNoteList({ noteList })}</NoteArchive>
+          <NoteArchive>
+            {' '}
+            {renderNoteList({ noteList, setNoteList })}
+          </NoteArchive>
         </aside>
         <div className="notepad">
           <div className="note-doc-header">

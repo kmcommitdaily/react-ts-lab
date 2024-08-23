@@ -1,6 +1,11 @@
 // types
 
-import { handleAddProps, renderNoteListProps } from '../lib/types';
+import {
+  handleAddProps,
+  renderNoteListProps,
+  handleDeleteProps,
+} from '../lib/types';
+import DeleteButton from '../components/DeleteButton';
 
 // utils
 export function handleAdd({
@@ -53,12 +58,27 @@ export function handleMinimize(
   setIsExtended((prev) => !prev);
 }
 
-export function renderNoteList({ noteList }: renderNoteListProps) {
+function handleDelete({ setNoteList, index }: handleDeleteProps) {
+  const noteList = localStorage.getItem('noteList');
+  const savedNotes = noteList ? JSON.parse(noteList) : [];
+
+  const updatedList = savedNotes.filter((_, i) => i !== index);
+  setNoteList(updatedList);
+  localStorage.setItem('noteList', JSON.stringify(updatedList));
+}
+
+export function renderNoteList({ noteList, setNoteList }: renderNoteListProps) {
   return (
     <>
       {noteList.map((noteItem, index) => (
         <div className="list-container" key={index}>
+          <DeleteButton
+            onAdd={() => {
+              handleDelete({ setNoteList, index });
+            }}
+          />
           <h3>{noteItem.header}</h3>
+
           <p>{noteItem.note.split(' ').slice(0, 7).join(' ')}</p>
         </div>
       ))}
