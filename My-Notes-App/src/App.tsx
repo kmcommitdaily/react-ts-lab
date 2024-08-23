@@ -10,6 +10,7 @@ import {
 import { Note } from '../src/lib/types';
 import SearchBox from './components/SearchBox';
 import ExtendButton from './components/ExtendButton';
+import AddButton from './components/AddButton';
 
 function App() {
   // localStorage.removeItem('noteList');
@@ -48,15 +49,6 @@ function App() {
         </aside>
         <div className="notepad">
           <div className="note-doc-header">
-            {/* <button
-              className="extend-btn"
-              onClick={() => {
-                !isExtended
-                  ? handleExtend(setIsExtended)
-                  : handleMinimize(setIsExtended);
-              }}>
-              {isExtended ? 'minimize' : 'extend'}
-            </button> */}
             <ExtendButton
               isExtended={isExtended}
               onExtend={() => {
@@ -67,9 +59,8 @@ function App() {
               }}
             />
 
-            <button
-              className="add-btn"
-              onClick={() => {
+            <AddButton
+              onAdd={() => {
                 handleAdd({
                   noteList,
                   setNoteList,
@@ -78,9 +69,8 @@ function App() {
                   header,
                   note,
                 });
-              }}>
-              add
-            </button>
+              }}
+            />
           </div>
           <div className="note-document">
             <textarea
