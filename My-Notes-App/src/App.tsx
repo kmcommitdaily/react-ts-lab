@@ -14,12 +14,17 @@ import AddButton from './components/AddButton';
 import NoteArchive from './components/NoteArchive';
 import NotePadHeader from './components/NotePadHeader';
 import NotePadBody from './components/NotePadBody';
+import { handleRenderPrev } from './components/RenderPrevNote';
+import { handleNewNote } from './lib/utils';
 
 function App() {
   const [header, setHeader] = useState<string>('');
   const [note, setNote] = useState<string>('');
   const [noteList, setNoteList] = useState<Note[]>([]);
   const [isExtended, setIsExtended] = useState(false);
+  const [isPreview, setIsPreview] = useState(false);
+
+  console.log(isPreview);
 
   useEffect(() => {
     const savedNotes = localStorage.getItem('noteList');
@@ -34,6 +39,10 @@ function App() {
     }
   }, []);
 
+  const handleClick = (index: number) => {
+    handleRenderPrev({ setHeader, setNote, index, setIsPreview });
+  };
+
   return (
     <>
       <h1>Notes</h1>
@@ -46,7 +55,14 @@ function App() {
           </div>
           <h3>{noteList.length > 0 ? 'Saved Notes' : 'Start Adding Notes'}</h3>
 
-          <NoteArchive>{renderNoteList({ noteList, setNoteList })}</NoteArchive>
+          <NoteArchive>
+            {renderNoteList({
+              noteList,
+              setNoteList,
+              handleClick,
+              setIsPreview,
+            })}
+          </NoteArchive>
         </aside>
         <div className="notepad">
           <div className="note-doc-header">
@@ -62,16 +78,21 @@ function App() {
 
             <AddButton
               onAdd={() => {
-                handleAdd({
-                  noteList,
-                  setNoteList,
-                  setHeader,
-                  setNote,
-                  header,
-                  note,
-                });
-              }}
-            />
+                !isPreview
+                  ? handleAdd({
+                      noteList,
+                      setNoteList,
+                      setHeader,
+                      setNote,
+                      header,
+                      note,
+                    })
+                  : // : console.log('isPreview before toggle:', isPreview);
+                    handleNewNote({ setHeader, setIsPreview, setNote });
+                // console.log('isPreview after toggle:', isPreview);
+              }}>
+              {!isPreview ? 'Add' : 'New Note'}
+            </AddButton>
           </div>
           <div className="note-document">
             <NotePadHeader

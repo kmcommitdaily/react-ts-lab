@@ -25,6 +25,22 @@ export function handleAdd({
   setNote('');
 }
 
+interface handleNewNoteProps {
+  setHeader: React.Dispatch<React.SetStateAction<string>>;
+  setNote: React.Dispatch<React.SetStateAction<string>>;
+  setIsPreview: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function handleNewNote({
+  setHeader,
+  setNote,
+  setIsPreview,
+}: handleNewNoteProps) {
+  setHeader('');
+  setNote('');
+  setIsPreview(false);
+}
+
 export function handleExtend(
   setIsExtended: React.Dispatch<React.SetStateAction<boolean>>
 ) {
@@ -59,7 +75,7 @@ export function handleMinimize(
   setIsExtended((prev) => !prev);
 }
 
-function handleDelete({ setNoteList, index }: handleDeleteProps) {
+function handleDelete({ setNoteList, index, setIsPreview }: handleDeleteProps) {
   const noteList = localStorage.getItem('noteList');
   const savedNotes = (noteList ? JSON.parse(noteList) : []) as Note[];
 
@@ -67,21 +83,33 @@ function handleDelete({ setNoteList, index }: handleDeleteProps) {
 
   setNoteList(updatedList);
   localStorage.setItem('noteList', JSON.stringify(updatedList));
+  setIsPreview(false);
+  console.log('After delete:', { index, isPreview: setIsPreview });
 }
 
-export function renderNoteList({ noteList, setNoteList }: renderNoteListProps) {
+export function renderNoteList({
+  noteList,
+  setNoteList,
+  handleClick,
+  setIsPreview,
+}: renderNoteListProps) {
   return (
     <>
       {noteList.map((noteItem, index) => (
-        <div className="list-container" key={index}>
+        <div
+          className="list-container"
+          key={index}
+          onClick={() => {
+            handleClick(index);
+          }}>
           <DeleteButton
             onAdd={() => {
-              handleDelete({ setNoteList, index });
+              handleDelete({ setNoteList, index, setIsPreview });
             }}
           />
           <h3>{noteItem.header}</h3>
 
-          <p>{noteItem.note.split(' ').slice(0, 7).join(' ')}</p>
+          <p>{noteItem.note.split(' ').slice(0, 7).join(' ')}...</p>
         </div>
       ))}
     </>
