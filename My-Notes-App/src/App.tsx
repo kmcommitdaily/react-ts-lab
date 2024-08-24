@@ -17,6 +17,13 @@ import NotePadBody from './components/NotePadBody';
 import { handleRenderPrev } from './components/RenderPrevNote';
 import { handleNewNote } from './lib/utils';
 
+// to do:
+// when you click the delete btn it set the preview to true(don't know why)
+// no editing mechanism
+// no searching mechanism
+// text area header should auto expand same as the note body
+// notelist should have its own scroll mechanism different from note pad
+
 function App() {
   const [header, setHeader] = useState<string>('');
   const [note, setNote] = useState<string>('');
