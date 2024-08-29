@@ -20,7 +20,6 @@ export interface renderNoteListProps {
     React.SetStateAction<{ header: string; note: string }[]>
   >;
   handleClick: (index: number) => void;
-  setIsPreview: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface handleDeleteProps {
@@ -28,5 +27,4 @@ export interface handleDeleteProps {
     React.SetStateAction<{ header: string; note: string }[]>
   >;
   index: string | number;
-  setIsPreview: React.Dispatch<React.SetStateAction<boolean>>;
 }

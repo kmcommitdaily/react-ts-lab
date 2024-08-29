@@ -1,5 +1,7 @@
+import { MouseEvent } from 'react';
+
 interface DeleteButtonProps {
-  onAdd: () => void;
+  onAdd: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({ onAdd }) => {

@@ -75,7 +75,7 @@ export function handleMinimize(
   setIsExtended((prev) => !prev);
 }
 
-function handleDelete({ setNoteList, index, setIsPreview }: handleDeleteProps) {
+function handleDelete({ setNoteList, index }: handleDeleteProps) {
   const noteList = localStorage.getItem('noteList');
   const savedNotes = (noteList ? JSON.parse(noteList) : []) as Note[];
 
@@ -83,15 +83,12 @@ function handleDelete({ setNoteList, index, setIsPreview }: handleDeleteProps) {
 
   setNoteList(updatedList);
   localStorage.setItem('noteList', JSON.stringify(updatedList));
-  setIsPreview(false);
-  console.log('After delete:', { index, isPreview: setIsPreview });
 }
 
 export function renderNoteList({
   noteList,
   setNoteList,
   handleClick,
-  setIsPreview,
 }: renderNoteListProps) {
   return (
     <>
@@ -103,8 +100,9 @@ export function renderNoteList({
             handleClick(index);
           }}>
           <DeleteButton
-            onAdd={() => {
-              handleDelete({ setNoteList, index, setIsPreview });
+            onAdd={(event) => {
+              event.stopPropagation();
+              handleDelete({ setNoteList, index });
             }}
           />
           <h3>{noteItem.header}</h3>

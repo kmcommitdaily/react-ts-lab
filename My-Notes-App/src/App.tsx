@@ -67,7 +67,6 @@ function App() {
               noteList,
               setNoteList,
               handleClick,
-              setIsPreview,
             })}
           </NoteArchive>
         </aside>
@@ -94,9 +93,7 @@ function App() {
                       header,
                       note,
                     })
-                  : // : console.log('isPreview before toggle:', isPreview);
-                    handleNewNote({ setHeader, setIsPreview, setNote });
-                // console.log('isPreview after toggle:', isPreview);
+                  : handleNewNote({ setHeader, setIsPreview, setNote });
               }}>
               {!isPreview ? 'Add' : 'New Note'}
             </AddButton>
