@@ -25,22 +25,6 @@ export function handleAdd({
   setNote('');
 }
 
-interface handleNewNoteProps {
-  setHeader: React.Dispatch<React.SetStateAction<string>>;
-  setNote: React.Dispatch<React.SetStateAction<string>>;
-  setIsPreview: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export function handleNewNote({
-  setHeader,
-  setNote,
-  setIsPreview,
-}: handleNewNoteProps) {
-  setHeader('');
-  setNote('');
-  setIsPreview(false);
-}
-
 export function handleExtend(
   setIsExtended: React.Dispatch<React.SetStateAction<boolean>>
 ) {
@@ -83,6 +67,25 @@ function handleDelete({ setNoteList, index }: handleDeleteProps) {
 
   setNoteList(updatedList);
   localStorage.setItem('noteList', JSON.stringify(updatedList));
+}
+
+export function handleSaveNote({
+  noteList,
+  setNoteList,
+  setHeader,
+  setNote,
+  header,
+  note,
+  editIndex,
+}: handleAddProps & { editIndex: number }) {
+  const updatedNoteList = noteList.map((n, index) =>
+    index === editIndex ? { header, note } : n
+  );
+
+  localStorage.setItem('noteList', JSON.stringify(updatedNoteList));
+  setNoteList(updatedNoteList);
+  setHeader('');
+  setNote('');
 }
 
 export function renderNoteList({

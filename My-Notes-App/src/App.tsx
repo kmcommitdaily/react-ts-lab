@@ -15,10 +15,10 @@ import NoteArchive from './components/NoteArchive';
 import NotePadHeader from './components/NotePadHeader';
 import NotePadBody from './components/NotePadBody';
 import { handleRenderPrev } from './components/RenderPrevNote';
-import { handleNewNote } from './lib/utils';
+import { handleSaveNote } from './lib/utils';
 
 // to do:
-// when you click the delete btn it set the preview to true(don't know why)
+// when you click the delete btn it set the preview to true(don't know why) ✅
 // no editing mechanism
 // no searching mechanism
 // text area header should auto expand same as the note body
@@ -30,6 +30,7 @@ function App() {
   const [noteList, setNoteList] = useState<Note[]>([]);
   const [isExtended, setIsExtended] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   console.log(isPreview);
 
@@ -47,6 +48,7 @@ function App() {
   }, []);
 
   const handleClick = (index: number) => {
+    setEditIndex(index);
     handleRenderPrev({ setHeader, setNote, index, setIsPreview });
   };
 
@@ -84,18 +86,30 @@ function App() {
 
             <AddButton
               onAdd={() => {
-                !isPreview
-                  ? handleAdd({
-                      noteList,
-                      setNoteList,
-                      setHeader,
-                      setNote,
-                      header,
-                      note,
-                    })
-                  : handleNewNote({ setHeader, setIsPreview, setNote });
+                if (isPreview && editIndex !== null) {
+                  handleSaveNote({
+                    noteList,
+                    setNoteList,
+                    setHeader,
+                    setNote,
+                    header,
+                    note,
+                    editIndex,
+                  });
+                  setIsPreview(false);
+                  setEditIndex(null); // Reset after saving
+                } else {
+                  handleAdd({
+                    noteList,
+                    setNoteList,
+                    setHeader,
+                    setNote,
+                    header,
+                    note,
+                  });
+                }
               }}>
-              {!isPreview ? 'Add' : 'New Note'}
+              {!isPreview ? 'Add' : 'Save'}
             </AddButton>
           </div>
           <div className="note-document">
