@@ -19,7 +19,7 @@ import { handleSaveNote } from './lib/utils';
 
 // to do:
 // when you click the delete btn it set the preview to true(don't know why) ✅
-// no editing mechanism
+// no editing mechanism  ✅
 // no searching mechanism
 // text area header should auto expand same as the note body
 // notelist should have its own scroll mechanism different from note pad
@@ -31,8 +31,23 @@ function App() {
   const [isExtended, setIsExtended] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [query, setQuery] = useState<string>('');
 
-  console.log(isPreview);
+  const handleSearch = (searchQuery: string) => {
+    setQuery(searchQuery);
+
+    const savedNotes = localStorage.getItem('noteList');
+    const parsedNotes = savedNotes ? JSON.parse(savedNotes) : [];
+
+    if (searchQuery.trim() === '') {
+      setNoteList(parsedNotes);
+    } else {
+      const result = parsedNotes.filter((item: Note) =>
+        item.header.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setNoteList(result);
+    }
+  };
 
   useEffect(() => {
     const savedNotes = localStorage.getItem('noteList');
@@ -60,7 +75,9 @@ function App() {
         {/** clean the divs or make it more semantic */}
         <aside className="aside">
           <div className="search-container">
-            <SearchBox /> {/** work on this */}
+            <SearchBox onSearch={handleSearch} />
+
+            {/** work on this */}
           </div>
           <h3>{noteList.length > 0 ? 'Saved Notes' : 'Start Adding Notes'}</h3>
 
