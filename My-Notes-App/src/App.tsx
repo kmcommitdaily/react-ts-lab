@@ -22,7 +22,7 @@ import { handleSaveNote } from './lib/utils';
 // no editing mechanism  ✅
 // no searching mechanism
 // text area header should auto expand same as the note body
-// notelist should have its own scroll mechanism different from note pad
+// notelist should have its own scroll mechanism different from note pad ✅
 
 function App() {
   const [header, setHeader] = useState<string>('');
@@ -148,7 +148,7 @@ function App() {
               name="body"
               id="body"
               cols={30}
-              rows={50}
+              rows={40}
             />
           </div>
         </div>

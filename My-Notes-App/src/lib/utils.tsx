@@ -102,15 +102,18 @@ export function renderNoteList({
           onClick={() => {
             handleClick(index);
           }}>
-          <DeleteButton
-            onAdd={(event) => {
-              event.stopPropagation();
-              handleDelete({ setNoteList, index });
-            }}
-          />
-          <h3>{noteItem.header}</h3>
-
-          <p>{noteItem.note.split(' ').slice(0, 7).join(' ')}...</p>
+          <div className="archive-container">
+            <DeleteButton
+              onAdd={(event) => {
+                event.stopPropagation();
+                handleDelete({ setNoteList, index });
+              }}
+            />
+            <h3 className="archive-header">{noteItem.header}</h3>
+          </div>
+          <p className="archive-body">
+            {noteItem.note.split(' ').slice(0, 7).join(' ')}...
+          </p>
         </div>
       ))}
     </>

@@ -19,7 +19,7 @@ const ExtendButton: React.FC<ExtendButtonProps> = ({
           onMinimize();
         }
       }}>
-      {isExtended ? 'minimize' : 'extend'}
+      {isExtended ? 'Minimize' : 'Extend'}
     </button>
   );
 };

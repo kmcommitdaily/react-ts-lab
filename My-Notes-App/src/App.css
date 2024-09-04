@@ -1,43 +1,112 @@
+/* Global reset for overflow */
+* {
+  box-sizing: border-box;
+}
+
+/* Note document styling */
 .note-document {
   display: flex;
   flex-direction: column;
   width: 80vw;
+  overflow-wrap: break-word; /* Ensure long words break */
 }
 
+/* Body styling with scroll and padding */
+#body {
+  max-height: 80vh; /* Adjust as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 10px;
+}
+
+/* Header styling */
 #header {
   font-size: 20px;
 }
 
+/* Main container styling */
 .main-container {
   display: flex;
 }
 
+/* Search input styling */
+#search-input {
+  width: 200px;
+  padding: 5px;
+}
+
+/* Note document header styling */
 .note-doc-header {
   display: flex;
   margin-bottom: 20px;
 }
 
-.aside {
-  width: 300px;
+/* Archive container styling */
+.archive-container {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
+/* Delete button styling */
+.delete-btn {
+  width: 30px;
+  height: 25px;
+  font-size: 0.75rem;
+  opacity: 65%;
+}
+
+.delete-btn:hover {
+  opacity: 100%;
+  background-color: rgba(181, 2, 2, 0.632);
+  border: none;
+}
+
+/* Archive header styling */
+.archive-header {
+  margin-bottom: 5px;
+  margin-right: auto;
+}
+
+/* Aside styling */
+/* Aside styling */
+.aside {
+  width: 300px;
+  padding: 0 5px 5px 5px;
+  max-height: 100vh; /* Adjust to fit the viewport minus padding/header */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* List container styling */
 .list-container {
   padding: 5px;
   margin-bottom: 10px;
   background-color: aliceblue;
+  box-sizing: border-box; /* Ensure padding and margin don't affect total height */
 }
 
+/* Previous list container styling */
 .prev-list-container {
   color: black;
-  padding: 10px;
-  margin: 10px;
+  padding-right: 10px;
+  margin-right: 10px;
 }
 
+/* Add button styling */
 .add-btn {
   margin-left: auto;
   width: 100px;
 }
 
-.delete-btn {
-  margin-left: 210px;
+.add-btn:hover {
+  background-color: rgb(5, 103, 5);
+}
+
+/* Extend button styling */
+.extend-btn {
+  padding: 5px;
+  width: 100px;
+  opacity: 60%;
+}
+
+.extend-btn:hover {
+  opacity: 100%;
 }
