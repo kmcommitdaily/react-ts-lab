@@ -33,6 +33,19 @@ function App() {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [query, setQuery] = useState<string>('');
 
+  useEffect(() => {
+    const savedNotes = localStorage.getItem('noteList');
+
+    if (savedNotes) {
+      try {
+        const parsedNotes = JSON.parse(savedNotes);
+        setNoteList(parsedNotes);
+      } catch (error) {
+        console.log('error', error);
+      }
+    }
+  }, []);
+
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
 
@@ -49,19 +62,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    const savedNotes = localStorage.getItem('noteList');
-
-    if (savedNotes) {
-      try {
-        const parsedNotes = JSON.parse(savedNotes);
-        setNoteList(parsedNotes);
-      } catch (error) {
-        console.log('error', error);
-      }
-    }
-  }, []);
-
   const handleClick = (index: number) => {
     setEditIndex(index);
     handleRenderPrev({ setHeader, setNote, index, setIsPreview });
@@ -71,14 +71,9 @@ function App() {
     <>
       <h1>Notes</h1>
       <div className="main-container">
-        {' '}
-        {/** clean the divs or make it more semantic */}
         <aside className="aside">
-          <div className="search-container">
-            <SearchBox onSearch={handleSearch} />
+          <SearchBox onSearch={handleSearch} />
 
-            {/** work on this */}
-          </div>
           <h3>{noteList.length > 0 ? 'Saved Notes' : 'Start Adding Notes'}</h3>
 
           <NoteArchive>

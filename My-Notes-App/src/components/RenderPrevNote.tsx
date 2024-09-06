@@ -6,7 +6,7 @@ interface handleRenderPreProps {
   index: number;
   setIsPreview: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
+// it should be a helper
 export function handleRenderPrev({
   setHeader,
   setNote,

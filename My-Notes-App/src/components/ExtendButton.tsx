@@ -4,6 +4,8 @@ interface ExtendButtonProps {
   onMinimize: () => void;
 }
 
+// all of the logic inside jsx/component should be separated
+
 const ExtendButton: React.FC<ExtendButtonProps> = ({
   isExtended,
   onExtend,
